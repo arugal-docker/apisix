@@ -34,8 +34,8 @@ RUN set -x \
         sudo \
         unzip \
         wget \
-    && curl https://raw.githubusercontent.com/apache/apisix/master/utils/linux-install-luarocks.sh -sL | bash - \
-    && luarocks install https://github.com/apache/apisix/raw/master/rockspec/apisix-master-0.rockspec --tree=/usr/local/apisix/deps PCRE_DIR=/usr/local/openresty/pcre \
+    && curl https://raw.githubusercontent.com/arugal-docker/apisix/master/utils/linux-install-luarocks.sh -sL | bash - \
+    && luarocks install https://raw.githubusercontent.com/arugal-docker/apisix/master/rockspec/apisix-master-0.rockspec --tree=/usr/local/apisix/deps PCRE_DIR=/usr/local/openresty/pcre \
     && cp -v /usr/local/apisix/deps/lib/luarocks/rocks-5.1/apisix/master-0/bin/apisix /usr/bin/ \
     && mv /usr/local/apisix/deps/share/lua/5.1/apisix /usr/local/apisix \
     # forward request and error logs to docker log collector
