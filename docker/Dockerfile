@@ -26,6 +26,7 @@ RUN set -x \
     && make deps \
     && make install \
     && mv /usr/share/lua/5.1/apisix /usr/local/apisix \
+    && make deps \
     # forward request and error logs to docker log collector
     && ln -sf /dev/stdout /usr/local/apisix/logs/access.log \
     && ln -sf /dev/stderr /usr/local/apisix/logs/error.log
