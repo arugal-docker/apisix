@@ -26,10 +26,7 @@ RUN set -x \
     && make deps \
     && make install \
     && mv /usr/share/lua/5.1/apisix /usr/local/apisix \
-    && mv /apisix/deps /usr/local/apisix \
-    # forward request and error logs to docker log collector
-    && ln -sf /dev/stdout /usr/local/apisix/logs/access.log \
-    && ln -sf /dev/stderr /usr/local/apisix/logs/error.log
+    && mv /apisix/deps /usr/local/apisix
 
 FROM api7/apisix-base:dev AS production-stage
 
@@ -44,13 +41,19 @@ RUN apt-get -y update --fix-missing \
 
 WORKDIR /usr/local/apisix
 
-ENV PATH=$PATH:/usr/local/openresty-debug/luajit/bin:/usr/local/openresty-debug/nginx/sbin:/usr/local/openresty-debug/bin
+ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin
 
 EXPOSE 9080 9443
 
 COPY ./docker/docker-entrypoint.sh /docker-entrypoint.sh
 
-RUN chmod +x /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh \
+    # forward request and error logs to docker log collector
+    && ln -sf /dev/stdout /usr/local/apisix/logs/access.log \
+    && ln -sf /dev/stderr /usr/local/apisix/logs/error.log \
+    && useradd -u 1001 apisix && chown -R apisix:apisix /usr/local/apisix
+
+USER apisix
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
