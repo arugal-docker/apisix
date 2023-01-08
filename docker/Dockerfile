@@ -20,6 +20,9 @@ RUN set -x \
         sudo \
         unzip \
         wget \
+        gnupg2
+
+RUN set -x \
     && bash utils/install-dependencies.sh \
     && make deps \
     && make install
