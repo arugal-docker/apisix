@@ -25,7 +25,11 @@ RUN set -x \
 RUN set -x \
     && bash utils/install-dependencies.sh \
     && make deps \
-    && make install
+    && make install \
+    && mv /usr/local/apisix/deps/share/lua/5.1/apisix /usr/local/apisix \
+    # forward request and error logs to docker log collector
+    && ln -sf /dev/stdout /usr/local/apisix/logs/access.log \
+    && ln -sf /dev/stderr /usr/local/apisix/logs/error.log
 
 FROM api7/apisix-base:dev AS production-stage
 
