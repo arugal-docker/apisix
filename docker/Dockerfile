@@ -20,6 +20,7 @@ RUN set -x \
         sudo \
         unzip \
         wget \
+    && bash utils/install-dependencies.sh \
     && make deps \
     && make install
 
