@@ -20,7 +20,7 @@ version = "master-0"
 supported_platforms = {"linux", "macosx"}
 
 source = {
-    url = "git@github.com:arugal-docker/apisix.git",
+    url = "git://github.com/apache/apisix",
     branch = "master",
 }
 
